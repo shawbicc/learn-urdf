@@ -1,0 +1,20 @@
+<launch>
+    <!-- Start Gazebo and load the empty world -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="false"/>
+    </include>
+
+    <!-- Load the robot description (URDF or Xacro) -->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find learn-urdf)/urdf/example_robot.urdf.xacro'" />
+
+    <!-- Start the robot_state_publisher -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen"/>
+
+    <!-- Optional: Start the joint_state_publisher_gui for manual control -->
+    <!-- <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/> -->
+
+    <!-- Start the Gazebo spawn_model node -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -model robot -param robot_description"/>
+</launch>

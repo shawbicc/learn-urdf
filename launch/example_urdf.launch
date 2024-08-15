@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<launch>
+
+
+    <rosparam file="$(find learn-urdf)/config/config.yaml" command="load"/>
+    <arg name="update_rate" value="20"/>
+    
+
+    <!-- gazebo -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>
+    
+
+    <!-- robot_state_publisher with urdf -->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find learn-urdf)/urdf/example_robot.urdf.xacro'" />
+    <!-- <param name="use_sim_time" value="true"/> -->
+    
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen"/>
+
+    <!-- needed for revolute and prismatic joints -->
+    <!-- <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/> -->
+    
+    <!-- launch rviz gui -->
+    <!-- <node name="rviz" pkg="rviz" type="rviz"/> -->
+
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" output="screen" respawn="false"
+    args="-urdf -model robot -param robot_description"/>
+
+    <!-- gazebo joint state publisher -->
+    <!-- <node name="gazebo_ros_joint_state_publisher" pkg="gazebo_ros" type="plugin" output="screen">
+        <param name="update_rate" value="$(arg update_rate)" />
+        <rosparam param="joint_names" command="load" file="$(find learn-urdf)/config/config.yaml"/>
+    </node> -->
+
+    <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" 
+    output="screen" ns="/" args="joint_state_publisher joint_controllers" /> -->
+
+    
+    
+
+</launch>
