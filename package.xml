@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>learn-urdf</name>
+  <name>learn_urdf</name>
   <version>0.0.0</version>
-  <description>The learn-urdf package</description>
+  <description>The learn_urdf package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
